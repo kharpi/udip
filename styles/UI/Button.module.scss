@@ -1,0 +1,33 @@
+@import '../mixins.scss';
+@import '../variables.scss';
+
+.button {
+	&__wrapper {
+		@include flex;
+		button {
+			border-radius: 2rem;
+			padding: 1rem 3rem;
+			border: 1px solid white;
+			cursor: pointer;
+			@include trans;
+		}
+		&--default {
+			button {
+				background: $dark-bg;
+				color: white;
+				&:hover {
+					background: $dark-bg-hover;
+				}
+			}
+		}
+		&--error {
+			button {
+				background: $error-color;
+				color: white;
+				&:hover {
+					background: $error-color-hover;
+				}
+			}
+		}
+	}
+}

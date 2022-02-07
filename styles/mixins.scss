@@ -1,0 +1,17 @@
+@mixin pseudo($display: block, $pos: absolute, $content: '') {
+	content: $content;
+	display: $display;
+	position: $pos;
+}
+
+@mixin trans($target: all, $speed: 0.5s, $type: ease, $origin: left) {
+	transition: $target $speed $type;
+}
+
+@mixin flex($justify: center, $direction: row, $align: center) {
+	display: flex;
+	justify-content: $justify;
+	align-items: $align;
+	flex-direction: $direction;
+	width: 100%;
+}

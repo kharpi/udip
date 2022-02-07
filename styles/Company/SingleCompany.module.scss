@@ -1,0 +1,10 @@
+@import '../mixins.scss';
+@import '../variables.scss';
+
+.company {
+	&__bh {
+		@include flex(flex-start);
+		margin-bottom: 1rem;
+		gap: 2rem;
+	}
+}

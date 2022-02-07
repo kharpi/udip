@@ -1,0 +1,33 @@
+@import '../mixins.scss';
+@import '../variables.scss';
+
+.nav {
+	&__container {
+		background: linear-gradient(to left, #091b27, #2d3b48);
+	}
+	&__wrapper {
+		display: flex;
+		justify-content: space-around;
+		align-items: center;
+		color: white;
+		text-transform: uppercase;
+		font-weight: 600;
+	}
+	&__item {
+		padding: 2rem 0;
+		position: relative;
+		&:after {
+			@include pseudo;
+			@include trans;
+			background: white;
+			width: 0px;
+			height: 5px;
+			bottom: 0;
+			left: 0;
+		}
+		&:hover:after,
+		&--active:after {
+			width: 100%;
+		}
+	}
+}
