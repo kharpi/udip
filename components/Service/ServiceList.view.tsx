@@ -9,22 +9,25 @@ type Props = {
 };
 
 const ServiceList = ({ services }: Props) => {
+	if (services.length < 1) return <></>;
 	return (
 		<div>
-			<h1>List of services</h1>
 			{services.map((service: IService, i: number) => (
 				<Link href={`/services/${service.id}`} key={`comp${i}`} passHref>
 					<div className='item'>
 						<p>
 							<strong>{service.name}</strong>
-							<br />
-							{service.company.name}
 						</p>
 						<span>Open</span>
 					</div>
 				</Link>
 			))}
-			<Button type='default' callback={() => Router.push('/services/new')}>
+			<Button
+				type='default'
+				callback={() =>
+					Router.push(`/services/new?comp=${services[0].company.id}`)
+				}
+			>
 				Create new service
 			</Button>
 		</div>

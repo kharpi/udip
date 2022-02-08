@@ -1,59 +1,62 @@
+import { cloneDeep } from 'lodash';
 import { GetServerSideProps } from 'next';
 import Router from 'next/router';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { apiURL } from '../../api/routes';
 import Service from '../../components/Service/Service.view';
-import { ICompany } from '../../interfaces/Company.interface';
-import { ISelected } from '../../interfaces/Select.interface';
+import { ServiceForm } from '../../forms/Service.form';
+import { IServiceForm } from '../../interfaces/forms/ServiceForm.interface';
+import { IInputChange } from '../../interfaces/InputChange.interface';
 import { toastParams } from '../../utils/getToastParams.util';
+import { changeHandler } from '../../utils/InputChange.util';
 
 type Props = {
-	companies: ICompany[];
+	comp: number;
 };
 
-const NewService = ({ companies }: Props) => {
-	const [selected, setSelected] = useState<ISelected>({
-		label: companies[0].name,
-		value: companies[0].id,
-	});
+const NewService = ({ comp }: Props) => {
+	const initForm = (): IServiceForm => {
+		const initialForm: IServiceForm = cloneDeep(ServiceForm);
+		return initialForm;
+	};
 
-	const createService = async (e: any) => {
+	const [form, set_form] = useState<IServiceForm>(initForm());
+
+	const onChange = (args: IInputChange): void => {
+		set_form(changeHandler(form, args.fieldName, args.value));
+	};
+
+	const parseFormData = (): IServiceForm => {
+		const finalState: IServiceForm = initForm();
+		for (const field of Object.values(form)) {
+			//@ts-ignore
+			finalState[field.id] = field.value;
+		}
+		return finalState;
+	};
+	const onSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-
 		const res = await fetch(apiURL('service', 'create'), {
-			body: JSON.stringify({
-				name: e.target.name.value,
-				description: e.target.description.value,
-				duration: e.target.duration.value,
-				companyId: selected.value,
-			}),
+			body: JSON.stringify({ ...parseFormData(), companyId: comp }),
 			headers: {
 				'Content-Type': 'application/json',
 			},
 			method: 'POST',
 		});
 		if (res.status === 201) {
+			toast.success('Successfully created the new service!', toastParams());
 			Router.push('/services');
 		} else {
 			toast.error(await res.text(), toastParams());
 		}
 	};
-
-	return (
-		<Service
-			companies={companies}
-			createService={createService}
-			setSelected={setSelected}
-			selected={selected}
-		/>
-	);
+	return <Service form={form} onChange={onChange} onSubmit={onSubmit} />;
 };
 
-export const getServerSideProps: GetServerSideProps = async () => {
-	const compRes = await fetch(`http://localhost:8080/company`);
-	const companies = await compRes.json();
-	return { props: { companies } };
+export const getServerSideProps: GetServerSideProps = async (context) => {
+	const { comp } = context.query;
+	return { props: { comp } };
 };
 
 export default NewService;
