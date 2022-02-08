@@ -36,7 +36,6 @@ const Select: React.FC<ILocalProps<any>> = (props): React.ReactElement => {
 			return 0;
 		});
 	}
-	//TODO: requried
 	return (
 		<div className={wrapperStyle.join(' ')}>
 			<label htmlFor={props.id} className='input-label'>

@@ -2,7 +2,7 @@ import React from 'react';
 import styles from '../../../styles/UI/Button.module.scss';
 
 type Props = {
-	children: React.ReactChild;
+	children: React.ReactChild | React.ReactChild[];
 	callback?: any;
 	type: 'error' | 'default';
 };

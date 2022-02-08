@@ -2,31 +2,38 @@ import { ISelectOption } from './SelectOption.interface';
 
 export interface ICommonInputProps {
 	id: string;
+	valid?: boolean;
+	hidden?: boolean;
+	touched?: boolean;
 	required?: boolean;
+	children?: JSX.Element;
+	disabled?: boolean;
 	className?: string;
 	labelText?: string;
-	children?: JSX.Element;
-	hidden?: boolean;
-	disabled?: boolean;
+	warningText?: string;
+	description?: string;
+	placeholder?: string;
+	manualRender?: boolean;
+	hasAfterEffect?: boolean;
 	wrapperClass?: string;
 }
 
 export interface IInputText extends ICommonInputProps {
+	value: string;
+	inlineLabel?: boolean;
+	isNumeric?: boolean;
+	isFloat?: boolean;
+	autoComplete?: 'on' | 'off';
 	type?: 'text' | 'email' | 'password' | 'tel' | 'number' | 'url';
 	textType?: true;
-	pattern?: string;
-	value: string;
 	placeholder?: string;
+	maxNumber?: number;
+	minNumber?: number;
+	maxLength?: number;
+	minLength?: number;
+	pattern?: string;
 }
-export interface IInputFile {
-	id: string;
-	fileType?: string;
-	value: Blob | null;
-	labelText?: string;
-	fileInputType?: true;
-	hasContent?: string;
-	required?: boolean;
-}
+
 export interface IInputSelect<T = ISelectOption> extends ICommonInputProps {
 	filterOption?: (option: any, rawInput: string) => boolean;
 	sortOption?: (optionA: any, optionB: any) => number;
@@ -43,26 +50,40 @@ export interface IInputSelect<T = ISelectOption> extends ICommonInputProps {
 	isLoading?: boolean;
 	selectType?: true;
 	isMulti?: boolean;
-	placeholder?: string;
 	value: null | T;
 	options: T[];
 }
-export interface IInputTextArea extends ICommonInputProps {
-	value: string;
-	textAreaType: true;
+
+export interface IInputMultiSelect<T = ISelectOption>
+	extends Omit<IInputSelect<T>, 'value'> {
+	value: T[];
 }
 
-export interface IInputBoolean extends ICommonInputProps {
-	value: boolean;
-	booleanType?: true;
-	name?: string;
+export type IInputSelectWithValue<T = ISelectOption> = Omit<
+	IInputSelect<T>,
+	'value' | 'options'
+> & {
+	value: T;
+	options: T[];
+};
+
+export interface IInputDate extends ICommonInputProps {
+	value: string | Date;
+	maxDate?: Date;
+	minDate?: Date;
+	showTime?: boolean;
+	isClearable?: boolean;
+	timeInterval?: number;
+	dateType?: true;
+	showTimeSelectOnly?: boolean;
+	withPortal?: boolean;
+	locale?: string | Locale | undefined;
+	dtFormat?: string;
+	timeCaption?: string;
 }
-export interface IInputBoolean extends ICommonInputProps {
-	value: boolean;
-	booleanType?: true;
-	name?: string;
-	labelTextBefore?: string;
-	labelTextAfter?: string;
-	href?: string;
-	hrefText?: string;
-}
+
+export type IInputTypes =
+	| IInputText
+	| IInputSelect<any>
+	| IInputSelectWithValue
+	| IInputDate;

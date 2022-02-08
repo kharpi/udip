@@ -42,7 +42,12 @@ const Services = ({ companies, services }: Props) => {
 	return (
 		<>
 			<ServiceChooser form={form} onChange={onChange} />
-			<ServiceList services={filteredServices} />
+			{form.company.value && (
+				<ServiceList
+					services={filteredServices}
+					compId={+form.company.value.id}
+				/>
+			)}
 		</>
 	);
 };

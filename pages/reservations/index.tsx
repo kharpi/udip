@@ -21,6 +21,7 @@ const ReservationList = ({ reservations }: Props) => {
 			method: 'DELETE',
 		});
 		if (res.status.toString().startsWith('2')) {
+			toast.success('Successfully deleted reservation!', toastParams());
 			Router.reload();
 		} else {
 			toast.error(await res.text(), toastParams());

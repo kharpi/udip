@@ -9,3 +9,5 @@ export interface IReservation {
 	duration: number;
 	works: IService[];
 }
+
+export type IReservationPopup = Pick<IReservation, 'name' | 'email' | 'phone'>;

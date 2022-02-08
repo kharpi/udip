@@ -6,10 +6,10 @@ import Button from '../UI/Button/Button';
 
 type Props = {
 	services: IService[];
+	compId: number;
 };
 
-const ServiceList = ({ services }: Props) => {
-	if (services.length < 1) return <></>;
+const ServiceList = ({ services, compId }: Props) => {
 	return (
 		<div>
 			{services.map((service: IService, i: number) => (
@@ -24,9 +24,7 @@ const ServiceList = ({ services }: Props) => {
 			))}
 			<Button
 				type='default'
-				callback={() =>
-					Router.push(`/services/new?comp=${services[0].company.id}`)
-				}
+				callback={() => Router.push(`/services/new?comp=${compId}`)}
 			>
 				Create new service
 			</Button>

@@ -1,121 +1,63 @@
 import React from 'react';
-import Select from 'react-select';
-import Button from '../UI/Button/Button';
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { ISelected, ISelectedString } from '../../interfaces/Select.interface';
+import huHU from 'date-fns/locale/hu';
+import { registerLocale, setDefaultLocale } from 'react-datepicker';
+import { IInputChange } from '../../interfaces/InputChange.interface';
+import { IReservationForm } from '../../interfaces/forms/ReservationForm.interface';
+import Select from '../UI/Select/Select';
+import { Datepicker } from '../UI/Datepicker/Datepicker';
 import InputText from '../UI/Input/InputText';
+import Button from '../UI/Button/Button';
+import styles from '../../styles/Reservation/Reservation.module.scss';
 
 type Props = {
+	form: IReservationForm;
+	onChange: (args: IInputChange) => void;
+	onSubmit: (e: React.FormEvent) => void;
 	reservations: Array<string>;
-	submitReservation: (e: any) => void;
-	selectRes: (e: ISelectedString) => void;
-	selectComp: (e: ISelected) => void;
-	selectServ: (e: ISelected) => void;
-	selectCompanyOptions: ISelected[];
-	serviceOptions: ISelected[] | undefined;
-	selectedService: ISelected[];
-	filterSubmit: (e: any) => void;
-	fromDate: Date;
-	setFromDate: (date: Date) => void;
-	toDate: Date;
-	setToDate: (date: Date) => void;
+	reserveFor: (date: string) => void;
 };
 
 const NewReservation = ({
+	form,
+	onChange,
+	onSubmit,
 	reservations,
-	submitReservation,
-	selectRes,
-	selectComp,
-	selectServ,
-	selectCompanyOptions,
-	serviceOptions,
-	selectedService,
-	filterSubmit,
-	fromDate,
-	setFromDate,
-	toDate,
-	setToDate,
+	reserveFor,
 }: Props) => {
+	registerLocale('hu-HU', huHU);
+	setDefaultLocale('hu');
 	return (
-		<div>
-			<h1>Reservation</h1>
-			<div className='input__wrapper'>
-				<label>Select company</label>
-				<Select
-					instanceId='cid'
-					options={selectCompanyOptions}
-					className='customSelect'
-					onChange={(e: any) => selectComp(e)}
-				/>
-			</div>
-			<div className='input__wrapper'>
-				<label>Select service</label>
-				<Select
-					instanceId='ssid'
-					options={serviceOptions}
-					className='customSelect'
-					isMulti
-					value={selectedService}
-					onChange={(e: any) => selectServ(e)}
-				/>
-			</div>
-			<div>
-				<h2>Filter available dates</h2>
-				<form
-					className='input'
-					onSubmit={filterSubmit}
-					style={{
-						marginBottom: '2rem',
-						border: '2px solid white',
-						padding: '2rem',
-					}}
-				>
-					<div style={{ display: 'flex' }}>
-						<DatePicker
-							selected={fromDate}
-							onChange={(date: Date) => setFromDate(date)}
-							showTimeSelect
-							dateFormat='yyyy-MM-dd HH:mm'
-						/>
-					</div>
-					<div style={{ display: 'flex' }}>
-						<DatePicker
-							selected={toDate}
-							onChange={(date: Date) => setToDate(date)}
-							showTimeSelect
-							dateFormat='yyyy-MM-dd HH:mm'
-						/>
-					</div>
-					<InputText
-						withoutWrap
-						type='number'
-						name='max'
-						id='max'
-						defaultValue={10}
-					/>
-					<Button type='default'>Filter available dates</Button>
+		<div className='reservation'>
+			<h1>New reservation</h1>
+			<Select {...form.company} onChange={onChange} />
+			{form.service.options.length > 0 && (
+				<Select {...form.service} onChange={onChange} />
+			)}
+			{form.service.options.length > 0 && form.service.value.length > 0 && (
+				<form onSubmit={onSubmit}>
+					<Datepicker {...form.fromDate} onChange={onChange} />
+					<Datepicker {...form.toDate} onChange={onChange} />
+					<InputText {...form.limit} onChange={onChange} />
+					<Button type='default'>Show available dates</Button>
 				</form>
-				<form className='input' onSubmit={submitReservation}>
-					<InputText type='text' name='name' id='name' label='Name' />
-					<InputText type='tel' name='phone' id='phone' label='Phone' />
-					<InputText type='email' name='email' id='email' label='Email' />
-					<div className='input__wrapper'>
-						<label>Available dates</label>
-						<Select
-							instanceId='ssid'
-							className='customSelect'
-							options={
-								reservations?.map((res) => ({ label: res, value: res })) || []
-							}
-							onChange={(e: any) => selectRes(e)}
-						/>
+			)}
+			{reservations.length > 0 && (
+				<>
+					<h1>select date</h1>
+					<div className={styles.reservation__mapped}>
+						{reservations.map((res, i) => (
+							<div key={`res${i}`}>
+								<Button type='default' callback={() => reserveFor(res)}>
+									{res.split(' ')[0]}
+									<br />
+									<strong>{res.split(' ')[1]}</strong>
+								</Button>
+							</div>
+						))}
 					</div>
-					<div className='button__wrapper span2'>
-						<Button type='default'>Reserve</Button>
-					</div>
-				</form>
-			</div>
+				</>
+			)}
 		</div>
 	);
 };
