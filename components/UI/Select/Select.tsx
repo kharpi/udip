@@ -67,13 +67,7 @@ const Select: React.FC<ILocalProps<any>> = (props): React.ReactElement => {
 				isLoading={props.isLoading}
 				getOptionLabel={(option: any) => option[props.nameAccessor || 'name']}
 				getOptionValue={(option: any) => option[props.idAccessor || 'id']}
-				noOptionsMessage={(obj: any) =>
-					props.noOptionsMessage || texts.noOption
-				}
 				placeholder={props.placeholder || texts.placeholder}
-				loadingMessage={(obj: any) =>
-					props.loadingMessage || texts.loadingMessage
-				}
 			/>
 			{props.children}
 		</div>

@@ -31,9 +31,7 @@ const NewReservation = ({
 		<div className='reservation'>
 			<h1>New reservation</h1>
 			<Select {...form.company} onChange={onChange} />
-			{form.service.options.length > 0 && (
-				<Select {...form.service} onChange={onChange} />
-			)}
+			{form.company.value && <Select {...form.service} onChange={onChange} />}
 			{form.service.options.length > 0 && form.service.value.length > 0 && (
 				<form onSubmit={onSubmit}>
 					<Datepicker {...form.fromDate} onChange={onChange} />

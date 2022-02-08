@@ -94,7 +94,10 @@ const Reservations = ({ services, companies }: Props) => {
 				})}`
 			)
 		);
-		setReservations(await res.json());
+		const response = await res.json();
+		if (response.length == 0)
+			toast.error('No date is available', toastParams());
+		setReservations(response);
 	};
 
 	const onPopupSubmit = async (e: React.FormEvent) => {
