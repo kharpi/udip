@@ -1,38 +1,81 @@
+import { cloneDeep } from 'lodash';
 import { GetServerSideProps } from 'next';
 import Router from 'next/router';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { apiURL } from '../../../api/routes';
 import Company from '../../../components/Company/Company.view';
-import { ICompany } from '../../../interfaces/Company.interface';
-import { getBH } from '../../../utils/getBH.util';
+import { CompanyForm } from '../../../forms/Company.form';
+import {
+	IBusinessHours,
+	ICompany,
+	ICompanyCreate,
+} from '../../../interfaces/Company.interface';
+import { ICompanyForm } from '../../../interfaces/forms/CompanyForm.interface';
+import { IInputChange } from '../../../interfaces/InputChange.interface';
 import { toastParams } from '../../../utils/getToastParams.util';
-import { handleArrayChange } from '../../../utils/handleArrayChange.util';
-import { orderBH } from '../../../utils/orderBH.util';
+import { changeHandler } from '../../../utils/InputChange.util';
 
 type Props = {
 	company: ICompany;
 };
 
 const SingleCompany = ({ company }: Props) => {
-	const companyHours = orderBH(company.businessHours);
-	const [fromArray, setFromArray] = useState<string[]>([
-		...companyHours.map((bh) => bh.from),
-	]);
-	const [toArray, setToArray] = useState<string[]>([
-		...companyHours.map((bh) => bh.to),
-	]);
-	const bhDays = companyHours.map((bh) => bh.day);
+	const initForm = (): ICompanyForm => {
+		const initialForm: ICompanyForm = cloneDeep(CompanyForm);
+		for (const field of Object.values(initialForm)) {
+			if (field.id === 'name' || field.id === 'address') {
+				//@ts-ignore
+				initialForm[field.id].value = company[field.id];
+			} else {
+				//@ts-ignore
+				initialForm[field.id].value = company.businessHours
+					.filter((comp) => comp.day === field.id.toUpperCase())
+					.map(
+						(comp: IBusinessHours) =>
+							comp.from.slice(0, 5) + '-' + comp.to.slice(0, 5)
+					)
+					.toString();
+			}
+		}
+		return initialForm;
+	};
 
-	const updateCompany = async (e: any) => {
+	const [form, set_form] = useState<ICompanyForm>(initForm());
+
+	const onChange = (args: IInputChange): void => {
+		set_form(changeHandler(form, args.fieldName, args.value));
+	};
+
+	const parseFormData = (): ICompanyCreate => {
+		const finalState: ICompanyCreate = {
+			name: '',
+			address: '',
+			businessHours: '',
+		};
+		const bhArray: Array<string> = [];
+		for (const field of Object.values(form)) {
+			if (field.id === 'name' || field.id === 'address') {
+				//@ts-ignore
+				finalState[field.id] = field.value;
+			} else {
+				//@ts-ignore
+				bhArray.push(
+					`${field.id.toUpperCase()}:${field.value.replace(/:/g, '')}`
+				);
+			}
+		}
+		finalState.businessHours = bhArray.join(',');
+		return finalState;
+	};
+
+	const onSubmit = async (e: any) => {
 		e.preventDefault();
 
 		const res = await fetch(apiURL('company', 'update'), {
 			body: JSON.stringify({
 				id: company.id,
-				name: e.target.name.value,
-				address: e.target.address.value,
-				businessHours: getBH(bhDays, fromArray, toArray),
+				...parseFormData(),
 			}),
 			headers: {
 				'Content-Type': 'application/json',
@@ -44,7 +87,7 @@ const SingleCompany = ({ company }: Props) => {
 		else toast.error(await res.text(), toastParams());
 	};
 
-	const deleteCompany = async (e: React.ChangeEvent) => {
+	const deleteCompany = async (e: React.FormEvent) => {
 		e.preventDefault();
 		if (!confirm(`Are you sure? Company: ${company.name}`)) return;
 		const res = await fetch(apiURL('company', 'id', `${company.id}`), {
@@ -54,29 +97,17 @@ const SingleCompany = ({ company }: Props) => {
 			method: 'DELETE',
 		});
 		if (res.status === 200) {
+			toast.success('Successfully deleted!', toastParams());
 			Router.push('/companies');
 		} else toast.error(await res.text(), toastParams());
 	};
 
-	const handleChange = (
-		e: React.ChangeEvent<HTMLInputElement>,
-		i: number,
-		target: string
-	) => {
-		target === 'to'
-			? handleArrayChange(e, i, toArray, setToArray)
-			: handleArrayChange(e, i, fromArray, setFromArray);
-	};
-
 	return (
 		<Company
+			form={form}
+			onChange={onChange}
+			onSubmit={onSubmit}
 			deleteCompany={deleteCompany}
-			updateCompany={updateCompany}
-			company={company}
-			fromArray={fromArray}
-			toArray={toArray}
-			bhDays={bhDays}
-			handleChange={handleChange}
 		/>
 	);
 };

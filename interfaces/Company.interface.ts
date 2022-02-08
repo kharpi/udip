@@ -10,3 +10,9 @@ export interface IBusinessHours {
 	from: string;
 	to: string;
 }
+
+export interface ICompanyCreate {
+	name: string;
+	address: string;
+	businessHours: string;
+}
