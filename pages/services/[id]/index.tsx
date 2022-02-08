@@ -22,7 +22,6 @@ const SingleService = ({ service, companies }: Props) => {
 	if (!service || !companies) return <></>;
 	const updateService = async (e: any) => {
 		e.preventDefault();
-		console.log(e.target as HTMLInputElement);
 		const res = await fetch(apiURL('service', 'update'), {
 			body: JSON.stringify({
 				id: service.id,
