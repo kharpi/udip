@@ -1,11 +1,4 @@
 import { IInputText } from '../../interfaces/Input.interface';
-
-export interface IRecipient {
-	id: string;
-	name: string;
-	addr: string;
-}
-
 export interface ICompanyForm {
 	name: IInputText;
 	address: IInputText;
