@@ -35,6 +35,15 @@ const Menu = () => {
 				>
 					<Link href='/reservations'>Reservations</Link>
 				</li>
+				<li
+					className={`${styles.nav__item} ${
+						router.pathname.startsWith('/calendar')
+							? styles['nav__item--active']
+							: ''
+					}`}
+				>
+					<Link href='/calendar'>Calendar</Link>
+				</li>
 			</ul>
 		</nav>
 	);
