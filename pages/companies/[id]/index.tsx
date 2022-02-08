@@ -7,6 +7,7 @@ import Company from '../../../components/Company/Company.view';
 import { ICompany } from '../../../interfaces/Company.interface';
 import { getBH } from '../../../utils/getBH.util';
 import { toastParams } from '../../../utils/getToastParams.util';
+import { handleArrayChange } from '../../../utils/handleArrayChange.util';
 import { orderBH } from '../../../utils/orderBH.util';
 
 type Props = {
@@ -56,18 +57,15 @@ const SingleCompany = ({ company }: Props) => {
 			Router.push('/companies');
 		} else toast.error(await res.text(), toastParams());
 	};
-	//TODO: generic it!
-	const handleChange = (e: any, i: number, target: string) => {
-		let tmpArray: Array<string> = [];
-		if (target === 'to') {
-			tmpArray = [...toArray];
-			tmpArray[i] = e.target.value;
-			setToArray(tmpArray);
-		} else {
-			tmpArray = [...fromArray];
-			tmpArray[i] = e.target.value;
-			setFromArray(tmpArray);
-		}
+
+	const handleChange = (
+		e: React.ChangeEvent<HTMLInputElement>,
+		i: number,
+		target: string
+	) => {
+		target === 'to'
+			? handleArrayChange(e, i, toArray, setToArray)
+			: handleArrayChange(e, i, fromArray, setFromArray);
 	};
 
 	return (

@@ -5,6 +5,7 @@ import Company from '../../components/Company/Company.view';
 import { getBH } from '../../utils/getBH.util';
 import { toast } from 'react-toastify';
 import { toastParams } from '../../utils/getToastParams.util';
+import { handleArrayChange } from '../../utils/handleArrayChange.util';
 
 const NewCompany = () => {
 	const [fromArray, setFromArray] = useState<string[]>(
@@ -40,22 +41,15 @@ const NewCompany = () => {
 			toast.error(await res.text(), toastParams());
 		}
 	};
-	//TODO: generic it!
+
 	const handleChange = (
 		e: React.ChangeEvent<HTMLInputElement>,
 		i: number,
 		target: string
 	) => {
-		let tmpArray: Array<string> = [];
-		if (target === 'to') {
-			tmpArray = [...toArray];
-			tmpArray[i] = e.target.value;
-			setToArray(tmpArray);
-		} else {
-			tmpArray = [...fromArray];
-			tmpArray[i] = e.target.value;
-			setFromArray(tmpArray);
-		}
+		target === 'to'
+			? handleArrayChange(e, i, toArray, setToArray)
+			: handleArrayChange(e, i, fromArray, setFromArray);
 	};
 
 	return (
