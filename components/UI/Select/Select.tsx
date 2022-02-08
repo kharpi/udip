@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { IInputSelect } from '../../../interfaces/Input.interface';
-import {
-	IInputChange,
-	ISelectChange,
-} from '../../../interfaces/InputChange.interface';
+import { IInputChange } from '../../../interfaces/InputChange.interface';
 import ReactSelect from 'react-select';
 import { InputDefaults } from './InputDefaults';
 
 type ILocalProps<T> = IInputSelect<T> & {
-	onChange: (e: IInputChange | ISelectChange<T>) => void;
+	onChange: (e: IInputChange) => void;
 };
 
 const Select: React.FC<ILocalProps<any>> = (props): React.ReactElement => {
@@ -50,7 +47,6 @@ const Select: React.FC<ILocalProps<any>> = (props): React.ReactElement => {
 					props.onChange({
 						fieldName: props.id,
 						value: value,
-						idAccessor: props.idAccessor,
 					});
 				}}
 				isMulti={props.isMulti}

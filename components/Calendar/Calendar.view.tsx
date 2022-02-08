@@ -1,5 +1,5 @@
 import React from 'react';
-import { ICalendarForm } from '../../interfaces/forms/Calendar.interface';
+import { ICalendarForm } from '../../interfaces/forms/CalendarForm.interface';
 import { IInputChange } from '../../interfaces/InputChange.interface';
 import { IReservation } from '../../interfaces/Reservation.interface';
 import Select from '../UI/Select/Select';

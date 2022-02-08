@@ -32,7 +32,7 @@ export const ServiceForm: IServiceForm = {
 	},
 	duration: {
 		id: 'duration',
-		value: '',
+		value: '1',
 		required: true,
 		labelText: 'Duration',
 		type: 'number',

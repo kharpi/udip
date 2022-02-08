@@ -11,8 +11,6 @@ export interface IBusinessHours {
 	to: string;
 }
 
-export interface ICompanyCreate {
-	name: string;
-	address: string;
+export type ICompanyCreate = Omit<ICompany, 'id' | 'businessHours'> & {
 	businessHours: string;
-}
+};

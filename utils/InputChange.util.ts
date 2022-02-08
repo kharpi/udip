@@ -22,25 +22,3 @@ export const setOptions = <T>(
 	form[fieldName].options = options;
 	return form;
 };
-
-export const setHidden = <T>(
-	oldForm: T,
-	fieldName: string,
-	options: boolean
-): T => {
-	let form: T = cloneDeep<T>(oldForm);
-	//@ts-ignore
-	form[fieldName].hidden = options;
-	return form;
-};
-
-export const setRequired = <T>(
-	oldForm: T,
-	fieldName: string,
-	options: boolean
-): T => {
-	let form: T = cloneDeep<T>(oldForm);
-	//@ts-ignore
-	form[fieldName].required = options;
-	return form;
-};

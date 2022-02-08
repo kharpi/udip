@@ -59,14 +59,6 @@ export interface IInputMultiSelect<T = ISelectOption>
 	value: T[];
 }
 
-export type IInputSelectWithValue<T = ISelectOption> = Omit<
-	IInputSelect<T>,
-	'value' | 'options'
-> & {
-	value: T;
-	options: T[];
-};
-
 export interface IInputDate extends ICommonInputProps {
 	value: string | Date;
 	maxDate?: Date;
@@ -82,8 +74,4 @@ export interface IInputDate extends ICommonInputProps {
 	timeCaption?: string;
 }
 
-export type IInputTypes =
-	| IInputText
-	| IInputSelect<any>
-	| IInputSelectWithValue
-	| IInputDate;
+export type IInputTypes = IInputText | IInputSelect<any> | IInputDate;

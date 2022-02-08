@@ -1,4 +1,4 @@
-import { ICalendarForm } from './../interfaces/forms/Calendar.interface';
+import { ICalendarForm } from '../interfaces/forms/CalendarForm.interface';
 
 export const CalendarForm: ICalendarForm = {
 	company: {

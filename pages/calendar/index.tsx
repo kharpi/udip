@@ -6,15 +6,11 @@ import { toast } from 'react-toastify';
 import { apiURL } from '../../api/routes';
 import CalendarView from '../../components/Calendar/Calendar.view';
 import { CalendarForm } from '../../forms/Calendar.form';
-import { ServiceStartForm } from '../../forms/Service.form';
 import { ICompany } from '../../interfaces/Company.interface';
-import { ICalendarForm } from '../../interfaces/forms/Calendar.interface';
-import { IServiceFormStart } from '../../interfaces/forms/ServiceForm.interface';
+import { ICalendarForm } from '../../interfaces/forms/CalendarForm.interface';
 import { IInputChange } from '../../interfaces/InputChange.interface';
 import { IReservation } from '../../interfaces/Reservation.interface';
-import { ISelectOption } from '../../interfaces/SelectOption.interface';
 import { IService } from '../../interfaces/Service.interface';
-import { dateStringToDate } from '../../utils/dateStringToDate.util';
 import { toastParams } from '../../utils/getToastParams.util';
 import { changeHandler, setOptions } from '../../utils/InputChange.util';
 
