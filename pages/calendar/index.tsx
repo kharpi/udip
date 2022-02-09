@@ -59,6 +59,8 @@ const Calendar = ({ companies, services }: Props) => {
 			method: 'GET',
 		});
 		const result: IReservation[] = await res.json();
+		if (result.length < 1)
+			toast.info('No available reservations!', toastParams());
 		setReservations(result.sort((a, b) => a.date.localeCompare(b.date)));
 	};
 
