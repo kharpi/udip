@@ -84,6 +84,7 @@ const Calendar = ({ companies, services }: Props) => {
 			toast.error(await res.text(), toastParams());
 		}
 	};
+
 	return (
 		<CalendarView
 			form={form}

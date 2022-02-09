@@ -1,0 +1,35 @@
+@import '../variables.scss';
+
+.calendar {
+	&__item {
+		display: flex;
+		gap: 2rem;
+		margin-bottom: 2rem;
+		@media (max-width: 600px) {
+			flex-direction: column;
+		}
+	}
+	&__res {
+		display: grid;
+		grid-template-rows: 1fr;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 2rem;
+		@media (max-width: 992px) {
+			grid-template-columns: repeat(2, 1fr);
+		}
+		@media (max-width: 600px) {
+			grid-template-columns: repeat(1, 1fr);
+		}
+		&_item {
+			border: 2px solid $dark-bg-hover;
+			border-radius: 2rem;
+			padding: 2rem;
+		}
+	}
+	&__date {
+		font-weight: bold;
+		font-size: 2rem;
+		white-space: nowrap;
+		width: fit-content;
+	}
+}
