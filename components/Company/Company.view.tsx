@@ -4,6 +4,7 @@ import { ICompanyForm } from '../../interfaces/forms/CompanyForm.interface';
 import { IInputChange } from '../../interfaces/InputChange.interface';
 import Button from '../UI/Button/Button';
 import Router from 'next/router';
+import MaskedInput from '../UI/Input/MaskedInput';
 
 type Props = {
 	form: ICompanyForm;
@@ -18,13 +19,13 @@ const Company = ({ form, onChange, onSubmit, deleteCompany }: Props) => {
 			<form onSubmit={onSubmit}>
 				<InputText {...form.name} onChange={onChange} />
 				<InputText {...form.address} onChange={onChange} />
-				<InputText {...form.monday} onChange={onChange} />
-				<InputText {...form.tuesday} onChange={onChange} />
-				<InputText {...form.wednesday} onChange={onChange} />
-				<InputText {...form.thursday} onChange={onChange} />
-				<InputText {...form.friday} onChange={onChange} />
-				<InputText {...form.saturday} onChange={onChange} />
-				<InputText {...form.sunday} onChange={onChange} />
+				<MaskedInput {...form.monday} onChange={onChange} />
+				<MaskedInput {...form.tuesday} onChange={onChange} />
+				<MaskedInput {...form.wednesday} onChange={onChange} />
+				<MaskedInput {...form.thursday} onChange={onChange} />
+				<MaskedInput {...form.friday} onChange={onChange} />
+				<MaskedInput {...form.saturday} onChange={onChange} />
+				<MaskedInput {...form.sunday} onChange={onChange} />
 				{deleteCompany !== undefined ? (
 					<div className='button__wrapper span2'>
 						<Button type='default'>Save Company</Button>

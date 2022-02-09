@@ -34,6 +34,10 @@ export interface IInputText extends ICommonInputProps {
 	pattern?: string;
 }
 
+export interface IInputMaskedText extends IInputText {
+	mask: string;
+}
+
 export interface IInputSelect<T = ISelectOption> extends ICommonInputProps {
 	filterOption?: (option: any, rawInput: string) => boolean;
 	sortOption?: (optionA: any, optionB: any) => number;

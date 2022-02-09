@@ -25,6 +25,7 @@ export const CompanyForm: ICompanyForm = {
 		type: 'text',
 		textType: true,
 		placeholder: '12:00-18:00',
+		mask: '99:99-99:99',
 		pattern:
 			'^([0-1]?[0-9]|2[0-3]):[0-5][0-9]-([0-1]?[0-9]|2[0-3]):[0-5][0-9]$',
 	},
@@ -36,6 +37,7 @@ export const CompanyForm: ICompanyForm = {
 		type: 'text',
 		textType: true,
 		placeholder: '12:00-18:00',
+		mask: '99:99-99:99',
 		pattern:
 			'^([0-1]?[0-9]|2[0-3]):[0-5][0-9]-([0-1]?[0-9]|2[0-3]):[0-5][0-9]$',
 	},
@@ -47,6 +49,7 @@ export const CompanyForm: ICompanyForm = {
 		type: 'text',
 		textType: true,
 		placeholder: '12:00-18:00',
+		mask: '99:99-99:99',
 		pattern:
 			'^([0-1]?[0-9]|2[0-3]):[0-5][0-9]-([0-1]?[0-9]|2[0-3]):[0-5][0-9]$',
 	},
@@ -58,6 +61,7 @@ export const CompanyForm: ICompanyForm = {
 		type: 'text',
 		textType: true,
 		placeholder: '12:00-18:00',
+		mask: '99:99-99:99',
 		pattern:
 			'^([0-1]?[0-9]|2[0-3]):[0-5][0-9]-([0-1]?[0-9]|2[0-3]):[0-5][0-9]$',
 	},
@@ -69,6 +73,7 @@ export const CompanyForm: ICompanyForm = {
 		type: 'text',
 		textType: true,
 		placeholder: '12:00-18:00',
+		mask: '99:99-99:99',
 		pattern:
 			'^([0-1]?[0-9]|2[0-3]):[0-5][0-9]-([0-1]?[0-9]|2[0-3]):[0-5][0-9]$',
 	},
@@ -80,6 +85,7 @@ export const CompanyForm: ICompanyForm = {
 		type: 'text',
 		textType: true,
 		placeholder: '12:00-18:00',
+		mask: '99:99-99:99',
 		pattern:
 			'^([0-1]?[0-9]|2[0-3]):[0-5][0-9]-([0-1]?[0-9]|2[0-3]):[0-5][0-9]$',
 	},
@@ -91,6 +97,7 @@ export const CompanyForm: ICompanyForm = {
 		type: 'text',
 		textType: true,
 		placeholder: '12:00-18:00',
+		mask: '99:99-99:99',
 		pattern:
 			'^([0-1]?[0-9]|2[0-3]):[0-5][0-9]-([0-1]?[0-9]|2[0-3]):[0-5][0-9]$',
 	},
